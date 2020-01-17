@@ -1,0 +1,14 @@
+.MenuBar {
+    display: flex;
+}
+
+.LeftMenu{
+    display: inline-flex;
+    justify-content: flex-start;
+}
+
+.RightMenu {
+    display: inline-flex;
+    margin-left: auto;
+    justify-content: flex-end;
+}

@@ -1,14 +1,12 @@
 import React,{Component} from 'react';
-import {Dashboard} from '../containers';
 
-class App extends Component{
+class Sort extends Component{
     render(){
         return(
             <React.Fragment>
-                <Dashboard/>
             </React.Fragment>
         )
     }
 }
 
-export default App;
+export default Sort;
