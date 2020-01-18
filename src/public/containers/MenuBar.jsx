@@ -3,41 +3,31 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem , ButtonDropdown, 
 import '../styles/MenuBar.css';
 
 class MenuBar extends Component{
-    constructor(props){
-        super(props);
-        
-        this.state = {
+    state = {
             isViewMenuOpen: false,
             isPropertiesMenuOpen: false,
             isFilterMenuOpen: false,
             isSortMenuOpen: false,
             isNewMenuOpen: false
-        }
-        
-        this.viewToggle = this.viewToggle.bind(this);
-        this.propertiesToggle = this.propertiesToggle.bind(this);
-        this.filterToggle = this.filterToggle.bind(this);
-        this.sortToggle = this.sortToggle.bind(this);
-        this.newToggle = this.newToggle.bind(this);
     }
 
-    viewToggle(){
+    viewToggle = () => {
         this.setState((prevState) => (Object.assign({},prevState,{isViewMenuOpen: !prevState.isViewMenuOpen})));
     }
 
-    propertiesToggle(){
+    propertiesToggle = () => {
         this.setState((prevState) => (Object.assign({},prevState,{isPropertiesMenuOpen: !prevState.isPropertiesMenuOpen})));
     }
     
-    filterToggle(){
+    filterToggle = () => {
         this.setState((prevState) => (Object.assign({},prevState,{isFilterOpen: !prevState.isFilterOpen})));
     }
 
-    sortToggle(){
+    sortToggle = () => {
         this.setState((prevState) => (Object.assign({},prevState,{isSortToggle: !prevState.isSortToggle})));
     }
 
-    newToggle(){
+    newToggle = () => {
         this.setState((prevState) => (Object.assign({},prevState,{isNewToggle: !prevState.isNewToggle})));
     }
 
