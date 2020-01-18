@@ -15,11 +15,13 @@ app.use(bodyParser.urlencoded({ extend: true }));
 const port = 9001;
 
 var fork = function() {
-    app.listen(port, () => console.log('Express server listening on port ' + port));
+  app.listen(port, () =>
+    console.log('Express server listening on port ' + port),
+  );
 };
 
 fork();
 
 module.exports = {
-    app
+  app,
 };

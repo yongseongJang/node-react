@@ -1,31 +1,31 @@
 .Table {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .Table__ListGroup {
-    width: 100%;
+  width: 100%;
 }
 
 .Table__ListGroup__ListGroupItem__Content {
-    display: flex;
+  display: flex;
 }
 
 .Table__ListGroup__ListGroupItem__Content:hover {
-    background-color: beige;
+  background-color: beige;
 }
 
 .Table__ListGroup__ListGroupItem__Title {
-    display: inline-flex;
-    margin-right: auto;
-    min-width: 240px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; 
+  display: inline-flex;
+  margin-right: auto;
+  min-width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .Table__ListGroup__ListGroupItem__Property {
-    display: inline-flex;
-    justify-content: flex-end;
-    margin-left: auto;
+  display: inline-flex;
+  justify-content: flex-end;
+  margin-left: auto;
 }
