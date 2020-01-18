@@ -5,32 +5,47 @@ import '../styles/MenuBar.css';
 class MenuBar extends Component{
     constructor(props){
         super(props);
-
-        const dropdownOpen = new Map();
-        dropdownOpen.set("View",false);
-        dropdownOpen.set("Properties",false);
-        dropdownOpen.set("Filter",false);
-        dropdownOpen.set("Sort",false);
-        dropdownOpen.set("New",false);
         
         this.state = {
-            dropdownOpen
+            isViewMenuOpen: false,
+            isPropertiesMenuOpen: false,
+            isFilterMenuOpen: false,
+            isSortMenuOpen: false,
+            isNewMenuOpen: false
         }
         
-        this.toggle = this.toggle.bind(this);
+        this.viewToggle = this.viewToggle.bind(this);
+        this.propertiesToggle = this.propertiesToggle.bind(this);
+        this.filterToggle = this.filterToggle.bind(this);
+        this.sortToggle = this.sortToggle.bind(this);
+        this.newToggle = this.newToggle.bind(this);
     }
 
-    toggle(item){
-        const dropdownOpen = this.state.dropdownOpen;
-        dropdownOpen.set(item,!dropdownOpen.get(item));
-        this.setState((prevState) => (Object.assign({},prevState,{dropdownOpen})));
+    viewToggle(){
+        this.setState((prevState) => (Object.assign({},prevState,{isViewMenuOpen: !prevState.isViewMenuOpen})));
+    }
+
+    propertiesToggle(){
+        this.setState((prevState) => (Object.assign({},prevState,{isPropertiesMenuOpen: !prevState.isPropertiesMenuOpen})));
+    }
+    
+    filterToggle(){
+        this.setState((prevState) => (Object.assign({},prevState,{isFilterOpen: !prevState.isFilterOpen})));
+    }
+
+    sortToggle(){
+        this.setState((prevState) => (Object.assign({},prevState,{isSortToggle: !prevState.isSortToggle})));
+    }
+
+    newToggle(){
+        this.setState((prevState) => (Object.assign({},prevState,{isNewToggle: !prevState.isNewToggle})));
     }
 
     render(){
         return(
                 <div className="MenuBar">
                     <div className="LeftMenu">
-                        <Dropdown className="MenuBar__Dropdown" isOpen={this.state.dropdownOpen.get('View')} toggle={() => this.toggle('View')}>
+                        <Dropdown className="MenuBar__Dropdown" isOpen={this.state.isViewMenuOpen} toggle={() => this.viewToggle}>
                             <DropdownToggle caret color="white" className="MenuBar__Dropdown__DropdownToggle">View</DropdownToggle>
                             <DropdownMenu>
                                 <DropdownItem>
@@ -39,28 +54,28 @@ class MenuBar extends Component{
                         </Dropdown>
                     </div>
                     <div className="RightMenu">
-                        <Dropdown className="MenuBar__Dropdown" isOpen={this.state.dropdownOpen.get('Properties')} toggle={() => this.toggle('Properties')}>
+                        <Dropdown className="MenuBar__Dropdown" isOpen={this.state.isPropertiesMenuOpen} toggle={() => this.propertiesToggle}>
                             <DropdownToggle color="white" className="MenuBar__Dropdown__DropdownToggle">Properties</DropdownToggle>
                             <DropdownMenu>
                                 <DropdownItem>
                                 </DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
-                        <Dropdown className="MenuBar__Dropdown" isOpen={this.state.dropdownOpen.get('Filter')} toggle={() => this.toggle('Filter')}>
+                        <Dropdown className="MenuBar__Dropdown" isOpen={this.state.isFilterMenuOpen} toggle={() => this.filterToggle}>
                             <DropdownToggle color="white" className="MenuBar__Dropdown__DropdownToggle">Filter</DropdownToggle>
                             <DropdownMenu>
                                 <DropdownItem>
                                 </DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
-                        <Dropdown className="MenuBar__Dropdown" isOpen={this.state.dropdownOpen.get('Sort')} toggle={() => this.toggle('Sort')}>
+                        <Dropdown className="MenuBar__Dropdown" isOpen={this.state.isSortMenuOpen} toggle={() => this.sortToggle}>
                             <DropdownToggle color="while" className="MenuBar__Dropdown__DropdownToggle">Sort</DropdownToggle>
                             <DropdownMenu>
                                 <DropdownItem>
                                 </DropdownItem>
                             </DropdownMenu>
                         </Dropdown>  
-                        <ButtonDropdown className="MenuBar__ButtonDropdown" isOpen={this.state.dropdownOpen.get('New')} toggle={() => this.toggle('New')}>
+                        <ButtonDropdown className="MenuBar__ButtonDropdown" isOpen={this.state.isNewMenuOpen} toggle={() => this.newToggle}>
                             <Button color="primary" className="MenuBar__ButtonDropdown__Button">New</Button>
                             <DropdownToggle caret color="primary" className="MenuBar__ButtonDropdown__DropdownToggle"/>
                             <DropdownMenu>
