@@ -26,13 +26,13 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: [MiniCssExtractPlugin.loader, "css-loader"]
+                use: [MiniCssExtractPlugin.loader, 'css-loader']
             },
 
         ]
     },
     devServer: {
-        host: '192.168.171.135',
+        host: '127.0.0.1',
         port: 9000,
         open: true,
         hot: true
