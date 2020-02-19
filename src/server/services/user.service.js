@@ -2,7 +2,6 @@ const async = require('async');
 const UserRepository = require('../models/repositories/user.repository');
 const createValidator = require('../utils/validation/createValidator');
 const {
-  userLoginSchema,
   userRegistrationSchema,
   emailSchema,
 } = require('../utils/validation/schemas/userSchema');
@@ -26,7 +25,7 @@ exports.readUserInfoByUserEmail = async email => {
 
 exports.login = async (email, password) => {
   try {
-    const validatedEmail = await validateEmail(eail);
+    const validatedEmail = await validateEmail(email);
 
     const hash = await UserRepository.readPasswordByUserEmail(validatedEmail);
 
@@ -93,7 +92,7 @@ const stringPasswordToHash = password => {
 };
 
 const comparePasswordToHash = (password, hash) => {
-  bcrtyp
+  bcrypt
     .compare(password, hash)
     .then(res => {
       if (!res) {
@@ -111,7 +110,7 @@ const getToken = email => {
       { email },
       process.env.PRIVATEKEY,
       {
-        expiresin: '1h',
+        expiresIn: '1h',
       },
       (err, token) => {
         if (err) {

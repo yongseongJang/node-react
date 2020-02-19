@@ -1,6 +1,6 @@
 const usersRouter = require('express').Router();
 const controller = require('../../controllers/users/users.controller');
-const authentication = require('../../middlewares/authentcation');
+const authentication = require('../../middlewares/authentication');
 
 usersRouter.get('/:email', authentication, controller.readUserInfoByUserEmail);
 

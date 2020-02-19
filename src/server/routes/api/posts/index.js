@@ -1,6 +1,6 @@
 const postsRouter = require('express').Router();
 const controller = require('../../controllers/posts/posts.controller');
-const authentication = require('../../middlewares/authentcation');
+const authentication = require('../../middlewares/authentication');
 
 postsRouter.get('/', authentication, controller.readByUser);
 

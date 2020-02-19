@@ -9,14 +9,16 @@ const authentication = (req, res, next) => {
 
     jwt.verify(token, process.env.PRIVATEKEY, (err, user) => {
       if (err) {
-        next(new Errorhandler(403));
+        return next(new Errorhandler(401, 'ValidationError', 'Invalid token'));
       }
 
       req.user = user;
-      next();
+      return next();
     });
   } else {
-    next(new Errorhandler(401));
+    return next(
+      new Errorhandler(401, 'ValidationError', 'No exist authHeader'),
+    );
   }
 };
 
