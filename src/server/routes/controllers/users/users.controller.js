@@ -7,7 +7,7 @@ exports.readUserInfoByUserEmail = asyncHandler(async (req, res, next) => {
 
   const result = await UserService.readUserInfoByUserEmail(email);
 
-  res.status(200).send(result);
+  res.status(200).send({ userInfo: result });
 });
 
 exports.login = asyncHandler(async (req, res, next) => {
@@ -15,7 +15,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   const result = await UserService.login(email, password);
 
-  res.status(200).send(result);
+  res.status(200).send({ token: result });
 });
 
 exports.registerUserInfo = asyncHandler(async (req, res, next) => {
