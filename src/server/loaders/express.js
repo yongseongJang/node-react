@@ -12,7 +12,7 @@ exports.expressLoader = app => {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(
     morgan('common', {
-      skip: () => {
+      skip: (req, res) => {
         return res.statusCode >= 400;
       },
       stream: process.stdout,
@@ -21,7 +21,7 @@ exports.expressLoader = app => {
 
   app.use(
     morgan('common', {
-      skip: () => {
+      skip: (req, res) => {
         return res.statusCode < 400;
       },
       stream: process.stderr,
