@@ -1,7 +1,7 @@
 const mongod = require('../../mongod');
 const async = require('async');
-const UserRepository = require('../../../src/server/models/repositories/user.repository');
-const User = require('../../../src/server/models/user');
+const UserRepository = require('../../../../src/server/models/repositories/user.repository');
+const User = require('../../../../src/server/models/user');
 
 describe('user repository unit tests', () => {
   const users = [{ email: 'test@gmail.com', pw: '123', userName: 'google' }];

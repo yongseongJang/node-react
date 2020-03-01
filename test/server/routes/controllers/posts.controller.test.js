@@ -1,6 +1,6 @@
 const async = require('async');
-const PostController = require('../../../src/server/routes/controllers/posts/posts.controller');
-const PostService = require('../../../src/server/services/post.service');
+const PostController = require('../../../../src/server/routes/controllers/posts/posts.controller');
+const PostService = require('../../../../src/server/services/post.service');
 
 describe('post controller unit test', () => {
   describe('readByUser', () => {

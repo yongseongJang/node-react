@@ -1,6 +1,6 @@
 const async = require('async');
-const UserController = require('../../../src/server/routes/controllers/users/users.controller');
-const UserService = require('../../../src/server/services/user.service');
+const UserController = require('../../../../src/server/routes/controllers/users/users.controller');
+const UserService = require('../../../../src/server/services/user.service');
 
 describe('user controller unit test', () => {
   describe('readUserInfoByUserEmail', () => {

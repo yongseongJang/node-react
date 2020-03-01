@@ -1,11 +1,11 @@
 const async = require('async');
-const UserService = require('../../src/server/services/user.service');
-const UserRepository = require('../../src/server/models/repositories/user.repository');
-const createValidator = require('../../src/server/utils/validation/createValidator');
+const UserService = require('../../../src/server/services/user.service');
+const UserRepository = require('../../../src/server/models/repositories/user.repository');
+const createValidator = require('../../../src/server/utils/validation/createValidator');
 const {
   userRegistrationSchema,
   emailSchema,
-} = require('../../src/server/utils/validation/schemas/userSchema');
+} = require('../../../src/server/utils/validation/schemas/userSchema');
 const mongod = require('../mongod');
 
 describe('user service unit tests', () => {

@@ -1,8 +1,8 @@
 const async = require('async');
-const authentication = require('../../../src/server/routes/middlewares/authentication');
-const { Errorhandler } = require('../../../src/server/utils/error');
+const authentication = require('../../../../src/server/routes/middlewares/authentication');
+const { Errorhandler } = require('../../../../src/server/utils/error');
 const mongod = require('../../mongod');
-const UserService = require('../../../src/server/services/user.service');
+const UserService = require('../../../../src/server/services/user.service');
 
 describe('authentication unit test', () => {
   it('should throw error if authHeader is not exist', () => {
@@ -56,7 +56,7 @@ describe('authentication integration test', () => {
 
     await UserService.registerUserInfo(userInfo);
 
-    const token = await UserService.login(userInfo.email, userInfo.pw);
+    const { token } = await UserService.login(userInfo.email, userInfo.pw);
     const headers = { authorization: 'Bearer ' + token };
     const req = { headers };
     const res = {};

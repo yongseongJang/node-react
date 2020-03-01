@@ -35,6 +35,13 @@ module.exports = {
     port: 9000,
     open: true,
     hot: true,
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:9001',
+        changeOrigin: true,
+      },
+    },
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
