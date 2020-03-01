@@ -1,6 +1,5 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const async = require('async');
 
 exports.mongooseLoader = async () => {
   await mongoose

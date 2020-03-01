@@ -1,4 +1,3 @@
-const async = require('async');
 const asyncHandler = require('../../../utils/asyncHandler');
 const PostService = require('../../../services/post.service');
 

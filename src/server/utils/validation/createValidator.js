@@ -1,4 +1,3 @@
-const Joi = require('@hapi/joi');
 const { Errorhandler } = require('../error');
 
 const createValidator = schema => async payload => {

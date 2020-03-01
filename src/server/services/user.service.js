@@ -1,4 +1,3 @@
-const async = require('async');
 const UserRepository = require('../models/repositories/user.repository');
 const createValidator = require('../utils/validation/createValidator');
 const {
@@ -12,6 +11,8 @@ require('dotenv').config();
 
 const validateUserRegistrationInfo = createValidator(userRegistrationSchema);
 const validateEmail = createValidator(emailSchema);
+
+const authExpirationTime = '3600000'; // 3600000ms == 1h
 
 exports.readUserInfoByUserEmail = async email => {
   try {
@@ -33,7 +34,7 @@ exports.login = async (email, password) => {
 
     const token = await getToken(email);
 
-    return token;
+    return { token, authExpirationTime };
   } catch (err) {
     throw err;
   }
@@ -110,7 +111,7 @@ const getToken = email => {
       { email },
       process.env.PRIVATEKEY,
       {
-        expiresIn: '1h',
+        expiresIn: authExpirationTime,
       },
       (err, token) => {
         if (err) {

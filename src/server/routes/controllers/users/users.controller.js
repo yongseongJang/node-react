@@ -1,4 +1,3 @@
-const async = require('async');
 const asyncHandler = require('../../../utils/asyncHandler');
 const UserService = require('../../../services/user.service');
 
@@ -15,7 +14,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   const result = await UserService.login(email, password);
 
-  res.status(200).send({ token: result });
+  res.status(200).send(result);
 });
 
 exports.registerUserInfo = asyncHandler(async (req, res, next) => {

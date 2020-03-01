@@ -1,4 +1,3 @@
-const async = require('async');
 const PostRepository = require('../models/repositories/post.repository');
 const createValidator = require('../utils/validation/createValidator');
 const postSchema = require('../utils/validation/schemas/postSchema');
