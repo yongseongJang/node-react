@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Label, Input as InputBox, FormText } from 'reactstrap';
 
 const Input = props => {
   return (
     <div className="Input">
-      <label className="Input__Label">{props.label}</label>
-      <input
+      <Label className="Input__Label">{props.label}</Label>
+      <InputBox
         className="Input__Form"
         id={props.id}
         type={props.type}
@@ -13,7 +14,7 @@ const Input = props => {
         onChange={props.onChange}
       />
       {props.errorMessage && (
-        <code className="Input__Error">{props.errorMessage}</code>
+        <FormText className="Input__Error">{props.errorMessage}</FormText>
       )}
     </div>
   );
