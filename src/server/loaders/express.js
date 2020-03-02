@@ -7,12 +7,12 @@ const morgan = require('morgan');
 const logger = require('../utils/logger');
 
 exports.expressLoader = app => {
-  app.use(express.static(path.join(__dirname, './../../dist')));
+  app.use(express.static(path.join(__dirname, '../../../dist')));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(
     morgan('common', {
-      skip: () => {
+      skip: (req, res) => {
         return res.statusCode >= 400;
       },
       stream: process.stdout,
@@ -21,7 +21,7 @@ exports.expressLoader = app => {
 
   app.use(
     morgan('common', {
-      skip: () => {
+      skip: (req, res) => {
         return res.statusCode < 400;
       },
       stream: process.stderr,
@@ -29,6 +29,10 @@ exports.expressLoader = app => {
   );
 
   require('../routes')(app);
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../../views/index.html'));
+  });
 
   app.use((err, req, res, next) => {
     logger.error(err);

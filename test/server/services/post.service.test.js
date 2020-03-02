@@ -1,8 +1,8 @@
 const async = require('async');
-const PostService = require('../../src/server/services/post.service');
-const PostRepository = require('../../src/server/models/repositories/post.repository');
-const createValidator = require('../../src/server/utils/validation/createValidator');
-const postSchema = require('../../src/server/utils/validation/schemas/postSchema');
+const PostService = require('../../../src/server/services/post.service');
+const PostRepository = require('../../../src/server/models/repositories/post.repository');
+const createValidator = require('../../../src/server/utils/validation/createValidator');
+const postSchema = require('../../../src/server/utils/validation/schemas/postSchema');
 
 describe('posts service unit tests', () => {
   describe('readByUser', () => {

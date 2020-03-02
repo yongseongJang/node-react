@@ -1,10 +1,10 @@
 const mongod = require('../../mongod');
 const async = require('async');
-const PostRepository = require('../../../src/server/models/repositories/post.repository');
-const Post = require('../../../src/server/models/post');
-const User = require('../../../src/server/models/user');
+const PostRepository = require('../../../../src/server/models/repositories/post.repository');
+const Post = require('../../../../src/server/models/post');
+const User = require('../../../../src/server/models/user');
 const mongoose = require('mongoose');
-const { Errorhandler } = require('../../../src/server/utils/error');
+const { Errorhandler } = require('../../../../src/server/utils/error');
 
 describe('post repository unit tests', () => {
   const posts = [

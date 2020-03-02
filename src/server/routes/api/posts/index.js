@@ -1,14 +1,15 @@
 const postsRouter = require('express').Router();
 const controller = require('../../controllers/posts/posts.controller');
+const authentication = require('../../middlewares/authentication');
 
-postsRouter.get('/', controller.readByUser);
+postsRouter.get('/', authentication, controller.readByUser);
 
-postsRouter.get('/:id', controller.readByPostId);
+postsRouter.get('/:id', authentication, controller.readByPostId);
 
-postsRouter.post('/', controller.create);
+postsRouter.post('/', authentication, controller.create);
 
-postsRouter.delete('/:id', controller.deleteByPostId);
+postsRouter.delete('/:id', authentication, controller.deleteByPostId);
 
-postsRouter.put('/:id', controller.updateByPostId);
+postsRouter.put('/:id', authentication, controller.updateByPostId);
 
 module.exports = postsRouter;
