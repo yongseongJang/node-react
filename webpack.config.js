@@ -1,23 +1,23 @@
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const path = require('path');
 
 module.exports = {
+  mode: 'development',
   entry: './src/public/index.jsx',
   output: {
-    path: path.resolve(__dirname, 'dist/client'),
+    path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
     publicPath: '/',
   },
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        include: path.resolve(__dirname, 'src'),
         use: [
           {
             loader: 'babel-loader',
@@ -44,10 +44,6 @@ module.exports = {
     historyApiFallback: true,
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './views/index.html',
-      filename: './index.html',
-    }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),

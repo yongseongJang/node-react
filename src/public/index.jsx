@@ -11,11 +11,18 @@ import { default as App } from './App.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const sagaMiddleware = createSagaMiddleware();
-const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
+
+const preloadedState = window.PRELOADED_STATE;
+
+const store = createStore(
+  rootReducer,
+  preloadedState,
+  applyMiddleware(sagaMiddleware),
+);
 
 sagaMiddleware.run(rootSaga);
 
-ReactDOM.render(
+ReactDOM.hydrate(
   <Provider store={store}>
     <Router history={history}>
       <App />
