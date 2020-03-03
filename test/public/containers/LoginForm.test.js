@@ -14,7 +14,7 @@ describe('<LoginForm />', () => {
   };
   const mockStore = configureStore();
 
-  it('should render two <Input/> components', () => {
+  it('should render two <FormGroup/> components', () => {
     const store = mockStore(initialState);
 
     const wrapper = mount(
@@ -22,7 +22,7 @@ describe('<LoginForm />', () => {
         <LoginForm />
       </Provider>,
     );
-    expect(wrapper.find('Input')).toHaveLength(2);
+    expect(wrapper.find('FormGroup')).toHaveLength(2);
   });
 
   it('should not trigger button click event if form is empty', () => {

@@ -41,38 +41,33 @@ exports.expressLoader = app => {
   require('../routes')(app);
 
   app.get('/*', (req, res) => {
-    try {
-      const context = {};
-      const store = configureStore();
-      const dataRequirements = routes
-        .filter(route => matchPath(req.path, route))
-        .map(route => route.component)
-        .filter(comp => comp.serverFetch)
-        .map(comp => {
-          const { type, payload } = comp.serverFetch;
-          return store.dispatch({ type, payload });
-        });
-
-      console.log(req.url);
-      Promise.all(dataRequirements).then(() => {
-        const jsx = (
-          <Provider store={store}>
-            <StaticRouter context={context} location={req.url}>
-              <App />
-            </StaticRouter>
-          </Provider>
-        );
-
-        const reactDom = renderToString(jsx);
-        const preloadedState = store.getState();
-        const helmetData = Helmet.renderStatic();
-
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(renderer(reactDom, preloadedState, helmetData));
+    const context = {};
+    const store = configureStore();
+    const dataRequirements = routes
+      .filter(route => matchPath(req.path, route))
+      .map(route => route.component)
+      .filter(comp => comp.serverFetch)
+      .map(comp => {
+        const { type, payload } = comp.serverFetch;
+        return store.dispatch({ type, payload });
       });
-    } catch (err) {
-      console.log(err);
-    }
+
+    Promise.all(dataRequirements).then(() => {
+      const jsx = (
+        <Provider store={store}>
+          <StaticRouter context={context} location={req.url}>
+            <App />
+          </StaticRouter>
+        </Provider>
+      );
+
+      const reactDom = renderToString(jsx);
+      const preloadedState = store.getState();
+      const helmetData = Helmet.renderStatic();
+
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(renderer(reactDom, preloadedState, helmetData));
+    });
   });
 
   app.use((err, req, res, next) => {
