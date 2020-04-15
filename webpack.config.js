@@ -6,17 +6,20 @@ const path = require('path');
 
 module.exports = {
   mode: 'development',
-  entry: './src/public/index.jsx',
+  entry: './src/public/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
     publicPath: '/',
   },
   devtool: 'inline-source-map',
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+  },
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(ts|js)x?$/,
         exclude: /node_modules/,
         use: [
           {
@@ -24,6 +27,11 @@ module.exports = {
           },
         ],
       },
+      // {
+      //   enforce: 'pre',
+      //   test: /\.js$/,
+      //   loader: 'source-map-loader',
+      // },
       {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
