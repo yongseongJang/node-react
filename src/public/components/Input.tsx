@@ -4,9 +4,9 @@ import { Label, Input as InputBox, FormText } from 'reactstrap';
 interface InputProps {
   label: string;
   id: string;
-  type: string;
+  type: any;
   value: string;
-  onChange: Function;
+  onChange: () => void;
   errorMessage: string;
 }
 

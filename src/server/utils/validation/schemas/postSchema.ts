@@ -1,13 +1,11 @@
-const Joi = require('@hapi/joi');
+import * as Joi from '@hapi/joi';
 
-const postSchema = Joi.object({
+export const postSchema = Joi.object({
   _id: Joi.any(),
   title: Joi.string(),
-  createdBy: Joi.string().required(),
+  createdBy: Joi.object().required(),
   lastEdited: Joi.date().required(),
   tags: Joi.array().items(Joi.string()),
   selectedTags: Joi.array().items(Joi.string()),
   content: Joi.string(),
 });
-
-module.exports = postSchema;

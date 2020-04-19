@@ -1,18 +1,31 @@
-const mongod = require('../../mongod');
-const async = require('async');
-const PostRepository = require('../../../../src/server/models/repositories/post.repository');
-const Post = require('../../../../src/server/models/post');
-const User = require('../../../../src/server/models/user');
-const mongoose = require('mongoose');
-const { Errorhandler } = require('../../../../src/server/utils/error');
+import { mongod } from '../../mongod';
+import PostRepository from '../../../../src/server/models/repositories/post.repository';
+import Post from '../../../../src/server/models/post';
+import User from '../../../../src/server/models/user';
+import * as mongoose from 'mongoose';
 
 describe('post repository unit tests', () => {
+  const users = [
+    {
+      _id: '5a23c1b5d52a003c98e13f1a',
+      email: 'test1@naver.com',
+      pw: 'test',
+      userName: 'test1',
+    },
+    {
+      _id: '5a23c1b5d52a003c98e13f1b',
+      email: 'test2@naver.com',
+      pw: 'test',
+      userName: 'test2',
+    },
+  ];
+
   const posts = [
     {
       _id: '4a23c1b5d52a003c98e13f1a',
       title: 'Babel',
-      createdBy: '5a23c1b5d52a003c98e13f1a',
-      lastEdited: '2020-02-01',
+      createdBy: users[0],
+      lastEdited: new Date('2020-02-01'),
       tags: ['Babel', 'Webpack', 'NodeJS'],
       selectedTags: ['Babel'],
       content: undefined,
@@ -20,8 +33,8 @@ describe('post repository unit tests', () => {
     {
       _id: '4a23c1b5d52a003c98e13f1b',
       title: 'Webpack',
-      createdBy: '5a23c1b5d52a003c98e13f1a',
-      lastEdited: '2020-02-01',
+      createdBy: users[0],
+      lastEdited: new Date('2020-02-01'),
       tags: ['Babel', 'Webpack', 'NodeJS'],
       selectedTags: ['Webpack'],
       content: undefined,
@@ -29,22 +42,15 @@ describe('post repository unit tests', () => {
     {
       _id: '4a23c1b5d52a003c98e13f1c',
       title: 'NodeJS',
-      createdBy: '5a23c1b5d52a003c98e13f1b',
-      lastEdited: '2020-02-02',
+      createdBy: users[1],
+      lastEdited: new Date('2020-02-02'),
       tags: ['Babel', 'Webpack', 'NodeJS'],
       selectedTags: ['NodeJS'],
       content: undefined,
     },
   ];
 
-  const users = [
-    {
-      _id: '5a23c1b5d52a003c98e13f1a',
-      email: 'test@naver.com',
-      pw: 'test',
-      userName: 'test',
-    },
-  ];
+  const postRepository = new PostRepository();
 
   beforeAll(async () => {
     await mongod.connect();
@@ -65,13 +71,11 @@ describe('post repository unit tests', () => {
 
   describe('readByUser', () => {
     it('should retrieve the correct posts if user _id matches ', async () => {
-      const _id = '5a23c1b5d52a003c98e13f1a';
-
-      const result = await PostRepository.readByUser(_id);
+      const result = await postRepository.readByUser(users[0]);
 
       expect(result).toHaveLength(2);
-      expect(result[0].createdBy[0]._id).toEqual(mongoose.Types.ObjectId(_id));
-      expect(result[1].createdBy[0]._id).toEqual(mongoose.Types.ObjectId(_id));
+      expect(result[0].createdBy[0].email).toEqual(users[0].email);
+      expect(result[1].createdBy[0].email).toEqual(users[0].email);
     });
   });
 
@@ -79,10 +83,10 @@ describe('post repository unit tests', () => {
     it('should retrieve the correct post if post _id matches', async () => {
       const postId = '4a23c1b5d52a003c98e13f1a';
 
-      const result = await PostRepository.readByPostId(postId);
+      const result = await postRepository.readByPostId(postId);
 
       expect(result).not.toBeNull();
-      expect(result._id).toEqual(mongoose.Types.ObjectId(postId));
+      expect(result._id.toString()).toEqual(postId);
     });
   });
 
@@ -91,16 +95,16 @@ describe('post repository unit tests', () => {
       const post = {
         _id: '4a23c1b5d52a003c98e13f1d',
         title: 'React',
-        createdBy: '5a23c1b5d52a003c98e13f1a',
-        lastEdited: '2020-02-01',
+        createdBy: users[0],
+        lastEdited: new Date('2020-02-01'),
         tags: ['Babel', 'Webpack', 'NodeJS', 'React'],
         selectedTags: ['React'],
         content: undefined,
       };
 
-      const result = await PostRepository.create(post);
-      expect(result._id).toEqual(
-        mongoose.Types.ObjectId('4a23c1b5d52a003c98e13f1d'),
+      const result = await postRepository.create(post);
+      expect(result._id.toString()).toEqual(
+        '4a23c1b5d52a003c98e13f1d',
       );
     });
 
@@ -108,14 +112,14 @@ describe('post repository unit tests', () => {
       const invalidedPost = {
         _id: '4a23c1b5d52a003c98e13f1e',
         title: 'React',
-        createdBy: '5a23c1b5d52a003c98e13f1a',
+        createdBy: users[0],
         lastEdited: 'a month ago',
         tags: ['Babel', 'Webpack', 'NodeJS', 'React'],
         selectedTags: ['React'],
         content: undefined,
       };
 
-      await expect(PostRepository.create(invalidedPost)).rejects.toThrow();
+      await expect(postRepository.create(invalidedPost)).rejects.toThrow();
     });
   });
 
@@ -123,7 +127,7 @@ describe('post repository unit tests', () => {
     it('should delete the correct post if post _id matches', async () => {
       const postId = '4a23c1b5d52a003c98e13f1a';
 
-      const result = await PostRepository.deleteByPostId(postId);
+      const result = await postRepository.deleteByPostId(postId);
 
       expect(result.deletedCount).toBe(1);
     });
@@ -136,14 +140,14 @@ describe('post repository unit tests', () => {
       const post = {
         _id: postId,
         title: 'React',
-        createdBy: '5a23c1b5d52a003c98e13f1b',
-        lastEdited: '2020-02-03',
+        createdBy: users[1],
+        lastEdited: new Date('2020-02-03'),
         tags: ['Babel', 'Webpack', 'React'],
         selectedTags: ['React'],
         content: undefined,
       };
 
-      const result = await PostRepository.updateByPostId(postId, post);
+      const result = await postRepository.updateByPostId(postId, post);
       expect(result.nModified).toBe(1);
     });
 
@@ -153,7 +157,7 @@ describe('post repository unit tests', () => {
       const invalidatedPost = {
         _id: postId,
         title: 'React',
-        createdBy: '5a23c1b5d52a003c98e13f1b',
+        createdBy: users[1],
         lastEdited: 'a day ago',
         tags: ['Babel', 'Webpack', 'React'],
         selectedTags: ['React'],
@@ -161,7 +165,7 @@ describe('post repository unit tests', () => {
       };
 
       await expect(
-        PostRepository.updateByPostId(postId, invalidatedPost),
+        postRepository.updateByPostId(postId, invalidatedPost),
       ).rejects.toThrow();
     });
   });

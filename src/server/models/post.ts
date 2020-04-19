@@ -1,4 +1,6 @@
-const mongoose = require('mongoose');
+import * as mongoose from 'mongoose';
+import { Post as IPost } from '../interfaces';
+
 const Schema = mongoose.Schema;
 
 const postSchema = new Schema({
@@ -10,6 +12,6 @@ const postSchema = new Schema({
   content: String,
 });
 
-const Post = mongoose.model('Post', postSchema);
+const Post = mongoose.model<IPost & mongoose.Document>('Post', postSchema);
 
-module.exports = Post;
+export default Post;

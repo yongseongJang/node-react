@@ -1,5 +1,6 @@
 import { Application } from 'express';
 import userRouter from './api/users/index';
+import postRouter from './api/posts/index';
 
 class ApiRouter {
   private app: Application;
@@ -9,7 +10,7 @@ class ApiRouter {
   }
 
   private init(): void {
-    // this.app.use('/api/posts', require('./api/posts'));
+    this.app.use('/api/posts', postRouter);
     this.app.use('/api/users', userRouter);
   }
 }

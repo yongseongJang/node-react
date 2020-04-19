@@ -16,7 +16,7 @@
   },
   "jest": {
     "transform": {
-      "^.+\\.(ts|js|jsx)?$": "babel-jest"
+      "^.+\\.(ts|tsx|js|jsx)?$": "babel-jest"
     },
     "setupFilesAfterEnv": [
       "./test/public/enzyme.js"
