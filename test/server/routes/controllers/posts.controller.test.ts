@@ -185,7 +185,7 @@ describe('post controller unit test', () => {
           _id: '4a23c1b5d52a003c98e13f1e',
           title: 'React',
           createdBy: {} as IUser,
-          lastEdited: 'a day ago',
+          lastEdited: 'a day ago ',
           tags: ['Babel', 'Webpack', 'NodeJS', 'React'],
           selectedTags: ['React'],
           content: undefined,
