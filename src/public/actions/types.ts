@@ -8,3 +8,13 @@ export interface IUserInfo {
   email: string;
   pw: string;
 }
+
+export interface IPost {
+  id: string | undefined;
+  title: string;
+  createdBy: string;
+  lastEdited: Date;
+  tags: Array<string>;
+  selectedTags: Array<string>;
+  content: string;
+}

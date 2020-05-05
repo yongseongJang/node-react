@@ -47,9 +47,15 @@ class UserService {
 
       await this.comparePasswordToHash(password, hash);
 
-      const token = await this.getToken(email);
+      const token = await this.getToken(validatedEmail);
 
-      return { token, authExpirationTime: Number(authExpirationTime) };
+      const userName = await this.userRepository.readUserNameByUserEmail(validatedEmail);
+
+      if (userName) {
+        return { token, authExpirationTime: Number(authExpirationTime), userName };
+      } else {
+        throw new Errorhandler(500, 'Internal Server Error', 'Internal Server Error')
+      }
     } catch (err) {
       throw err;
     }

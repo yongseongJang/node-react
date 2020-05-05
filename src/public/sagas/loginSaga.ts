@@ -12,13 +12,13 @@ export function* checkAuthTimeout(expirationTime: number) {
 
 export function* login(email: string, password: string) {
   try {
-    const { token, expirationTime } = yield call(
+    const { token, expirationTime, userName } = yield call(
       loginServices.login,
       email,
       password,
     );
 
-    yield put(loginActions.loginSuccess(token));
+    yield put(loginActions.loginSuccess(token, email, userName));
 
     history.replace('/dashboard');
 

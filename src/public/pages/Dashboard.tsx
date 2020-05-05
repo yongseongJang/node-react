@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { MenuBar } from '../containers';
-import { Table, Pagination } from '../components';
+import { MenuBar, Table } from '../containers';
+import { Pagination } from '../components';
 import { Head } from '../components';
 import { IServerSideComponentClass } from '../utils/routes';
 

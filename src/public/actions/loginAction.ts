@@ -16,8 +16,8 @@ const login = (loginInfo: ILoginInfo) => {
   };
 };
 
-const loginSuccess = (token: string) => {
-  return { type: loginConstants.LOGIN_SUCCESS, token };
+const loginSuccess = (token: string, email: string, userName: string) => {
+  return { type: loginConstants.LOGIN_SUCCESS, token, email, userName };
 };
 
 const loginFailure = (err: Error) => {

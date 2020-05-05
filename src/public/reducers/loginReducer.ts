@@ -1,10 +1,21 @@
 import { loginConstants } from '../actions';
 
+export interface loginReducerState {
+  isRequesting: boolean;
+  loginStatus: boolean;
+  error: Error;
+  token: string;
+  email: string;
+  userName: string;
+}
+
 const initialState = {
   isRequesting: false,
   loginStatus: false,
   error: null,
-  token: null,
+  token: '',
+  email: '',
+  userName: '',
 };
 
 export const loginReducer = (state = initialState, action) => {
@@ -18,6 +29,8 @@ export const loginReducer = (state = initialState, action) => {
         loginStatus: true,
         error: null,
         token: action.token,
+        email: action.email,
+        userName: action.userName
       };
     case loginConstants.LOGIN_FAILURE:
       return { ...state, isRequesting: false, error: action.err };
@@ -29,7 +42,9 @@ export const loginReducer = (state = initialState, action) => {
         isRequesting: false,
         loginStatus: false,
         error: null,
-        token: null,
+        token: '',
+        email: '',
+        userName: '',
       };
     default:
       return state;

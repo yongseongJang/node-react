@@ -37,7 +37,7 @@ describe('posts service unit tests', () => {
       const post = {
         _id: '5a23c1b5d52a003c98e13f1a',
         title: 'React',
-        createdBy: {} as IUser,
+        createdBy: 'test',
         lastEdited: 'a day ago',
         tags: ['Babel', 'Webpack', 'React'],
         selectedTags: ['React'],
@@ -51,7 +51,7 @@ describe('posts service unit tests', () => {
       const post = {
         _id: '5a23c1b5d52a003c98e13f1a',
         title: 'React',
-        createdBy: {} as IUser,
+        createdBy: 'test',
         lastEdited: new Date('2020-02-02'),
         tags: ['Babel', 'Webpack', 'React'],
         selectedTags: ['React'],
@@ -85,7 +85,7 @@ describe('posts service unit tests', () => {
       const post = {
         _id: '5a23c1b5d52a003c98e13f1a',
         title: 'React',
-        createdBy: {} as IUser,
+        createdBy: 'test',
         lastEdited: 'a day ago',
         tags: ['Babel', 'Webpack', 'React'],
         selectedTags: ['React'],
@@ -100,7 +100,7 @@ describe('posts service unit tests', () => {
       const post = {
         _id: postId,
         title: 'React',
-        createdBy: {} as IUser,
+        createdBy: 'test',
         lastEdited: new Date('2020-02-02'),
         tags: ['Babel', 'Webpack', 'React'],
         selectedTags: ['React'],

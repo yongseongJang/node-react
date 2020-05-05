@@ -24,9 +24,10 @@ describe('login saga', () => {
   it('should dispatch login success action if login info is valid', async () => {
     const token = 'tokenValue';
     const expirationTime = '1';
+    const userName = 'test';
 
     loginServices.login = jest.fn().mockImplementation(() => {
-      return { token, expirationTime };
+      return { token, expirationTime, userName };
     });
 
     const email = 'test@gmail.com';
@@ -36,7 +37,6 @@ describe('login saga', () => {
     await runSaga(
       {
         dispatch: action => dispatched.push(action),
-        getState: () => ({}),
       },
       login,
       email,
@@ -44,10 +44,12 @@ describe('login saga', () => {
     );
 
     expect(loginServices.login).toHaveBeenCalledWith(email, password);
-    expect(dispatched).toContainEqual(loginActions.loginSuccess(token));
+    expect(dispatched).toContainEqual(
+      loginActions.loginSuccess(token, email, userName),
+    );
   });
 
-  it('should dispatch login success action if login info is invalid', async () => {
+  it('should dispatch login failure action if login info is invalid', async () => {
     const error = new Error('Invalid login Info');
 
     loginServices.login = jest.fn().mockImplementation(() => {
@@ -61,7 +63,6 @@ describe('login saga', () => {
     const result = await runSaga(
       {
         dispatch: action => dispatched.push(action),
-        getState: () => ({}),
       },
       login,
       email,

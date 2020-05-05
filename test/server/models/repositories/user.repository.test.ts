@@ -51,12 +51,19 @@ describe('user repository unit tests', () => {
     it('should retrieve the correct password if email was matched', async () => {
       const email = 'test@gmail.com';
 
-      const result: IUser = await userRepository.readPasswordByUserEmail(email);
+      const result: Pick<IUser, 'pw'> = await userRepository.readPasswordByUserEmail(email);
 
       expect(result).not.toBeNull();
       expect(result.pw).toBe(users[0].pw);
     });
   });
+
+  describe('readUserNameByUserEmail', () => {
+    it('should retrieve the correct userName if email was matched', async () => {
+      const userName: string = await userRepository.readUserNameByUserEmail(users[0].email);
+      expect(userName).toBe(users[0].userName);
+    })
+  })
 
   describe('createUserInfo', () => {
     it('should create correct user if properties type of user object was matched schematypes', async () => {

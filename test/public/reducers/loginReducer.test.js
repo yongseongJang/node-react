@@ -6,7 +6,9 @@ describe('login reducer', () => {
     isRequesting: false,
     loginStatus: false,
     error: null,
-    token: null,
+    token: '',
+    email: '',
+    userName: '',
   };
   it('should return the initial state', () => {
     expect(loginReducer(undefined, {})).toEqual(initialState);
@@ -30,6 +32,8 @@ describe('login reducer', () => {
     const action = {
       type: loginConstants.LOGIN_SUCCESS,
       token: 'tokenValue',
+      email: 'test@gmail.com',
+      userName: 'google',
     };
     expect(loginReducer(initialState, action)).toEqual({
       ...initialState,
@@ -37,6 +41,8 @@ describe('login reducer', () => {
       loginStatus: true,
       error: null,
       token: action.token,
+      email: 'test@gmail.com',
+      userName: 'google',
     });
   });
 
@@ -71,7 +77,9 @@ describe('login reducer', () => {
       isRequesting: false,
       loginStatus: false,
       error: null,
-      token: null,
+      token: '',
+      email: '',
+      userName: '',
     });
   });
 });

@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const postSchema = new Schema({
   title: String,
-  createdBy: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  createdBy: String,
   lastEdited: Date,
   tags: [String],
   selectedTags: [String],

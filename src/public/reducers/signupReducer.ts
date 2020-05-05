@@ -1,5 +1,10 @@
 import { signupConstants } from '../actions';
 
+export interface signupReducerState {
+  isRequesting: boolean;
+  error: Error;
+}
+
 const initailState = {
   isRequesting: false,
   error: null,

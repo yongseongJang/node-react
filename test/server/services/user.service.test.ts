@@ -53,6 +53,8 @@ describe('user service unit tests', () => {
 
       userService['comparePasswordToHash'] = jest.fn();
 
+      userService['userRepository'].readUserNameByUserEmail = jest.fn().mockReturnValue('userName');
+
       await userService.login(email, password);
 
       expect(
@@ -61,6 +63,12 @@ describe('user service unit tests', () => {
       expect(
         userService['userRepository'].readPasswordByUserEmail,
       ).toHaveBeenCalledWith(email);
+      expect(
+        userService['userRepository'].readUserNameByUserEmail
+      ).toHaveBeenCalledTimes(1);
+      expect(
+        userService['userRepository'].readUserNameByUserEmail
+      ).toHaveBeenCalledWith(email)
     });
   });
 

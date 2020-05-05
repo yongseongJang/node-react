@@ -30,6 +30,18 @@ class UserRepository {
       });
   }
 
+  public readUserNameByUserEmail(validatedEmail: string): Promise<null | string> {
+    return User.findOne({ email: validatedEmail })
+      .select({ userName: 1 })
+      .lean()
+      .then(doc => {
+        return doc === null ? null : doc.userName;
+      })
+      .catch(err => {
+        throw new Errorhandler(500, err.name, err.message);
+      })
+  }
+
   public createUserInfo(convertedUserInfo: IUser) {
     const user = new User(convertedUserInfo);
     return user.save().catch(err => {

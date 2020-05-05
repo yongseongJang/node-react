@@ -2,9 +2,9 @@ import { loginServices } from '../../../src/public/services';
 import axios from 'axios';
 
 describe('login service', () => {
-  it('should return token and exirationTime if request login with valid info', async () => {
+  it('should return token, exirationTime and userName if request login with valid info', async () => {
     const res = {
-      data: { token: 'tokenValue', authExpirationTime: '1' },
+      data: { token: 'tokenValue', authExpirationTime: '1', userName: 'test' },
     };
     axios.post = jest.fn().mockReturnValue(Promise.resolve(res));
 
@@ -12,6 +12,7 @@ describe('login service', () => {
     expect(result).toEqual({
       token: res.data.token,
       expirationTime: res.data.authExpirationTime,
+      userName: res.data.userName,
     });
   });
 

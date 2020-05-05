@@ -4,7 +4,7 @@ import { User } from '.';
 interface Post {
   _id: string;
   title: string;
-  createdBy: User;
+  createdBy: string;
   lastEdited: Date;
   tags: Array<string>;
   selectedTags: Array<string>;

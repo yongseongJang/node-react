@@ -24,7 +24,7 @@ describe('post repository unit tests', () => {
     {
       _id: '4a23c1b5d52a003c98e13f1a',
       title: 'Babel',
-      createdBy: users[0],
+      createdBy: users[0].userName,
       lastEdited: new Date('2020-02-01'),
       tags: ['Babel', 'Webpack', 'NodeJS'],
       selectedTags: ['Babel'],
@@ -33,7 +33,7 @@ describe('post repository unit tests', () => {
     {
       _id: '4a23c1b5d52a003c98e13f1b',
       title: 'Webpack',
-      createdBy: users[0],
+      createdBy: users[0].userName,
       lastEdited: new Date('2020-02-01'),
       tags: ['Babel', 'Webpack', 'NodeJS'],
       selectedTags: ['Webpack'],
@@ -42,7 +42,7 @@ describe('post repository unit tests', () => {
     {
       _id: '4a23c1b5d52a003c98e13f1c',
       title: 'NodeJS',
-      createdBy: users[1],
+      createdBy: users[1].userName,
       lastEdited: new Date('2020-02-02'),
       tags: ['Babel', 'Webpack', 'NodeJS'],
       selectedTags: ['NodeJS'],
@@ -74,8 +74,8 @@ describe('post repository unit tests', () => {
       const result = await postRepository.readByUser(users[0]);
 
       expect(result).toHaveLength(2);
-      expect(result[0].createdBy[0].email).toEqual(users[0].email);
-      expect(result[1].createdBy[0].email).toEqual(users[0].email);
+      expect(result[0].createdBy).toEqual(users[0].userName);
+      expect(result[1].createdBy).toEqual(users[0].userName);
     });
   });
 
@@ -95,7 +95,7 @@ describe('post repository unit tests', () => {
       const post = {
         _id: '4a23c1b5d52a003c98e13f1d',
         title: 'React',
-        createdBy: users[0],
+        createdBy: users[0].userName,
         lastEdited: new Date('2020-02-01'),
         tags: ['Babel', 'Webpack', 'NodeJS', 'React'],
         selectedTags: ['React'],
@@ -112,7 +112,7 @@ describe('post repository unit tests', () => {
       const invalidedPost = {
         _id: '4a23c1b5d52a003c98e13f1e',
         title: 'React',
-        createdBy: users[0],
+        createdBy: users[0].userName,
         lastEdited: 'a month ago',
         tags: ['Babel', 'Webpack', 'NodeJS', 'React'],
         selectedTags: ['React'],
@@ -140,7 +140,7 @@ describe('post repository unit tests', () => {
       const post = {
         _id: postId,
         title: 'React',
-        createdBy: users[1],
+        createdBy: users[1].userName,
         lastEdited: new Date('2020-02-03'),
         tags: ['Babel', 'Webpack', 'React'],
         selectedTags: ['React'],
@@ -157,7 +157,7 @@ describe('post repository unit tests', () => {
       const invalidatedPost = {
         _id: postId,
         title: 'React',
-        createdBy: users[1],
+        createdBy: users[1].userName,
         lastEdited: 'a day ago',
         tags: ['Babel', 'Webpack', 'React'],
         selectedTags: ['React'],

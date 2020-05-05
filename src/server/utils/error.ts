@@ -5,11 +5,13 @@ class Errorhandler extends Error {
   public name: string;
   public message: string;
 
-  constructor(statusCode: number, name: string, message: string) {
+  constructor();
+  constructor(statusCode: number, name: string, message: string);
+  constructor(statusCode?: number, name?: string, message?: string) {
     super();
-    this.statusCode = statusCode;
-    this.name = name;
-    this.message = message;
+    this.statusCode = statusCode || 500;
+    this.name = name || 'Internal server error';
+    this.message = message || 'Internal server error';
   }
 
   public handleError(err: Errorhandler, res: Response) {
