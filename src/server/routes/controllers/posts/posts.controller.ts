@@ -10,11 +10,12 @@ class PostController {
     this.postService = new PostService();
   }
 
-  public readByUser: RequestHandler = asyncHandler(
+  readByUser: RequestHandler = asyncHandler(
     async (req: RequestWithUser, res: Response, next: NextFunction) => {
       const email = req.user.email;
+      const page = req.query && req.query.page && typeof req.query.page === 'string' ? Number(req.query.page) : 1;
 
-      const result = await this.postService.readByUser(email);
+      const result = await this.postService.readByUser(email, page);
 
       res.status(200).send(result);
     },

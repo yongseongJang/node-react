@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { MenuBar, Table } from '../containers';
-import { Pagination } from '../components';
 import { Head } from '../components';
 import { IServerSideComponentClass } from '../utils/routes';
 
@@ -17,7 +16,6 @@ const Dashboard: IServerSideComponentClass = class Dashboard extends React.Compo
         />
         <MenuBar />
         <Table />
-        <Pagination />
       </React.Fragment>
     );
   }

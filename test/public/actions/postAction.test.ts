@@ -1,5 +1,6 @@
 import { postConstants, postActions } from '../../../src/public/actions'
 import { IPost } from '../../../src/public/actions/types';
+import { IPagination } from '../../../src/public/reducers/types';
 
 describe('post action', () => {
     it('should create an action to post create', () => {
@@ -27,5 +28,34 @@ describe('post action', () => {
             type: postConstants.CREATE_POST_FAILURE,
         };
         expect(postActions.createPostFailure()).toEqual(expectedAction);
+    })
+
+    it('should create an action to request posts', () => {
+        const page = 1;
+        const token = 'token';
+        const expectedAction = {
+            type: postConstants.REQUEST_POSTS,
+            page,
+            token
+        }
+        expect(postActions.requestPosts(page, token)).toEqual(expectedAction);
+    });
+
+    it('should create an action to request posts success', () => {
+        const pagination = {} as IPagination;
+        const paginatedItems = [];
+        const expectedAction = {
+            type: postConstants.REQUEST_POSTS_SUCCESS,
+            pagination,
+            paginatedItems
+        };
+        expect(postActions.requestPostsSuccess(pagination, paginatedItems)).toEqual(expectedAction);
+    })
+
+    it('should create an action to request posts success', () => {
+        const expectedAction = {
+            type: postConstants.REQUEST_POSTS_FAILURE,
+        };
+        expect(postActions.requestPostsFailure()).toEqual(expectedAction);
     })
 })
