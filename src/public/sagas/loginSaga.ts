@@ -1,9 +1,10 @@
 import { take, call, put, fork, delay, cancel } from 'redux-saga/effects';
+import { Task } from 'redux-saga'
 import { loginServices } from '../services';
 import { loginConstants, loginActions } from '../actions';
 import { history } from '../utils/history';
 
-let forkCheckAuthTimeout;
+let forkCheckAuthTimeout: Task;
 
 export function* checkAuthTimeout(expirationTime: number) {
   yield delay(expirationTime);

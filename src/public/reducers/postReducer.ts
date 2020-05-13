@@ -1,20 +1,11 @@
 import { postConstants } from '../actions';
-import { IPost } from '../actions/types'
-import { IPagination } from './types';
-
-export interface postReducerState {
-    post: IPost;
-    pagination: IPagination;
-    paginatedItems: Array<IPost>;
-    isRequesting: boolean;
-}
 
 const initialState = {
     post: {
-        id: undefined,
+        _id: undefined,
         title: '',
         createdBy: '',
-        lastEdited: new Date(),
+        lastEdited: '',
         tags: [],
         selectedTags: [],
         content: '',
@@ -24,7 +15,7 @@ const initialState = {
     isRequesting: false,
 }
 
-export const postReducer = (state = initialState, action) => {
+export const postReducer = (state = initialState, action: { type: string, [key: string]: any }) => {
     switch (action.type) {
         case postConstants.REQUEST_POSTS:
             return { ...state, isRequesting: true };
@@ -38,6 +29,20 @@ export const postReducer = (state = initialState, action) => {
             return { ...state, isRequesting: false };
         case postConstants.CREATE_POST_FAILURE:
             return { ...state, isRequesting: false };
+        case postConstants.READ_POST:
+            return { ...state, isRequesting: true };
+        case postConstants.READ_POST_SUCCESS:
+            return { ...state, post: action.post, isRequesting: false }
+        case postConstants.READ_POST_FAILURE:
+            return { ...state, isRequesting: false }
+        case postConstants.UPDATE_POST:
+            return { ...state, isRequesting: true }
+        case postConstants.UPDATE_POST_SUCCESS:
+            return { ...state, isRequesting: false }
+        case postConstants.UPDATE_POST_FAILURE:
+            return { ...state, isRequesting: false }
+        case postConstants.SET_NEW_POST:
+            return { ...state, post: { ...initialState.post, createdBy: action.userName, lastEdited: action.date } };
         default:
             return state;
     }

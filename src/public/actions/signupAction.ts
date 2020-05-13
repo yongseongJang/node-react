@@ -1,4 +1,4 @@
-import { IUserInfo } from './types';
+import { IUserInfo } from '../interfaces';
 
 export const signupConstants = {
   SIGNUP_REQUEST: 'SIGNUP_REQUEST',

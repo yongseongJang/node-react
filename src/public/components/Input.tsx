@@ -7,7 +7,7 @@ interface InputProps {
   type: any;
   value: string;
   onChange: () => void;
-  errorMessage: string;
+  errorMessage: string | null;
 }
 
 const Input = (props: InputProps) => {

@@ -4,8 +4,10 @@ import { useDispatch } from 'react-redux';
 import { validate } from '../utils/validations';
 import { IFields } from '../utils/fields/types';
 
-const withForm = formInitialData => WrappedComponent => {
-  return props => {
+const withForm = (formInitialData: { [key: string]: IFields }) => (
+  WrappedComponent: React.FC<any>,
+) => {
+  return (props: any) => {
     const dispatch = useDispatch();
     const [formState, setFormState] = useState<{ [key: string]: IFields }>({
       ...formInitialData,

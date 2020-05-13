@@ -1,16 +1,11 @@
 import { signupConstants } from '../actions';
 
-export interface signupReducerState {
-  isRequesting: boolean;
-  error: Error;
-}
-
 const initailState = {
   isRequesting: false,
   error: null,
 };
 
-export const signupReducer = (state = initailState, action) => {
+export const signupReducer = (state = initailState, action: { type: string, [key: string]: any }) => {
   switch (action.type) {
     case signupConstants.SIGNUP_REQUEST:
       return { ...state, isRequesting: true, error: null };

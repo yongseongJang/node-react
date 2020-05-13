@@ -15,13 +15,13 @@ class PostRouter {
   private initializeRoutes() {
     this.router.get('/', authentication, this.controller.readByUser);
 
-    this.router.get('/:id', authentication, this.controller.readByPostId);
+    this.router.get('/:postId', authentication, this.controller.readByPostId);
 
     this.router.post('/', authentication, this.controller.create);
 
-    this.router.delete('/:id', authentication, this.controller.deleteByPostId);
+    this.router.delete('/:postId', authentication, this.controller.deleteByPostId);
 
-    this.router.put('/:id', authentication, this.controller.updateByPostId);
+    this.router.put('/:postId', authentication, this.controller.updateByPostId);
   }
 }
 

@@ -4,32 +4,35 @@ import signupFields from '../utils/fields/signupFields';
 import { Input } from '../components';
 import { signupActions } from '../actions';
 import { Form, FormGroup, Button } from 'reactstrap';
+import { IFields } from '../utils/fields/types';
 
 interface SignupProps {
   renderElements: Function;
   isValidForm: boolean;
-  onChange: Function;
+  onChange: () => void;
   submit: Function;
 }
 
-const SignupForm = (props: SignupProps) => {
+const SignupForm: React.FC<SignupProps> = props => {
   return (
     <div className="SingUpForm">
       <Form>
-        {props.renderElements().map(formElement => {
-          return (
-            <FormGroup key={formElement.id}>
-              <Input
-                id={formElement.id}
-                label={formElement.config.elementLabel}
-                type={formElement.config.inputType}
-                value={formElement.config.value}
-                onChange={props.onChange}
-                errorMessage={formElement.config.errorMessage}
-              />
-            </FormGroup>
-          );
-        })}
+        {props
+          .renderElements()
+          .map((formElement: { id: string; config: IFields }) => {
+            return (
+              <FormGroup key={formElement.id}>
+                <Input
+                  id={formElement.id}
+                  label={formElement.config.elementLabel}
+                  type={formElement.config.inputType}
+                  value={formElement.config.value}
+                  onChange={props.onChange}
+                  errorMessage={formElement.config.errorMessage}
+                />
+              </FormGroup>
+            );
+          })}
         <Button
           className="SignupForm__Button"
           disabled={!props.isValidForm}

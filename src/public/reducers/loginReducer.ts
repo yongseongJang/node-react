@@ -1,14 +1,5 @@
 import { loginConstants } from '../actions';
 
-export interface loginReducerState {
-  isRequesting: boolean;
-  loginStatus: boolean;
-  error: Error;
-  token: string;
-  email: string;
-  userName: string;
-}
-
 const initialState = {
   isRequesting: false,
   loginStatus: false,
@@ -18,7 +9,7 @@ const initialState = {
   userName: '',
 };
 
-export const loginReducer = (state = initialState, action) => {
+export const loginReducer = (state = initialState, action: { type: string, [key: string]: any }) => {
   switch (action.type) {
     case loginConstants.LOGIN_REQUEST:
       return { ...state, isRequesting: true };

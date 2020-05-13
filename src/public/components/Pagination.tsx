@@ -31,7 +31,7 @@ const Pagination = (props: PaginationProps) => {
   };
 
   return (
-    <RPagination>
+    <RPagination className="Pagination">
       <React.Fragment>
         <PaginationItem disabled={props.currentPage === 1}>
           <PaginationLink id="first" first onClick={handlePageClick} />
@@ -43,7 +43,7 @@ const Pagination = (props: PaginationProps) => {
       {props.pages &&
         props.pages.map(page => {
           return (
-            <PaginationItem active={props.currentPage === page}>
+            <PaginationItem key={page} active={props.currentPage === page}>
               <PaginationLink id="page" onClick={handlePageClick}>
                 {page}
               </PaginationLink>

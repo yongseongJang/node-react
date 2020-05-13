@@ -1,4 +1,4 @@
-import { ILoginInfo } from './types';
+import { ILoginInfo } from '../interfaces';
 
 export const loginConstants = {
   LOGIN_REQUEST: 'LOGIN_REQUEST',

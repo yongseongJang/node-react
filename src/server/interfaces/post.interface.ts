@@ -5,7 +5,7 @@ interface Post {
   _id: string;
   title: string;
   createdBy: string;
-  lastEdited: Date;
+  lastEdited: string;
   tags: Array<string>;
   selectedTags: Array<string>;
   content: string;

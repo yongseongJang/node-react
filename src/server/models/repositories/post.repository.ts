@@ -6,7 +6,7 @@ import Errorhandler from '../../utils/error';
 class PostRepository {
   public readByUser = (user: IUser): Promise<Array<IPost> | null> => {
     return Post.find({ createdBy: user.userName })
-      .select({ tags: 0, content: 0 })
+      .select({ __v: 0, tags: 0, content: 0 })
       .lean()
       .then(docs => {
         return docs;
@@ -18,6 +18,7 @@ class PostRepository {
 
   public readByPostId = (postId: string): Promise<IPost | null> => {
     return Post.findOne({ _id: postId })
+      .select({ __v: 0 })
       .lean()
       .then(doc => {
         return doc;

@@ -1,6 +1,6 @@
 export interface IFields {
   elementLabel: string;
-  inputType: 'text' | 'password';
+  inputType: string;
   value: string;
   validation: IValidation;
   valid: boolean;

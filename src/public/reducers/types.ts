@@ -1,6 +1,4 @@
-import { loginReducerState } from './loginReducer';
-import { signupReducerState } from './signupReducer';
-import { postReducerState } from './postReducer';
+import { IPost, IPagination } from '../interfaces';
 
 export interface RootState {
     loginReducer: loginReducerState;
@@ -8,14 +6,24 @@ export interface RootState {
     postReducer: postReducerState;
 }
 
-export interface IPagination {
-    totalItems: number;
-    currentPage: number;
-    pageSize: number;
-    totalPages: number;
-    startPage: number;
-    endPage: number;
-    startIndex: number;
-    endIndex: number;
-    pages: Array<number>;
+export interface loginReducerState {
+    isRequesting: boolean;
+    loginStatus: boolean;
+    error: Error;
+    token: string;
+    email: string;
+    userName: string;
+}
+
+
+export interface signupReducerState {
+    isRequesting: boolean;
+    error: Error;
+}
+
+export interface postReducerState {
+    post: IPost;
+    pagination: IPagination;
+    paginatedItems: Array<IPost>;
+    isRequesting: boolean;
 }

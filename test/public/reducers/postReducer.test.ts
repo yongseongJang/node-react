@@ -1,15 +1,14 @@
 import { postReducer } from '../../../src/public/reducers/postReducer';
 import { postConstants } from '../../../src/public/actions';
-import { IPost } from '../../../src/public/actions/types';
-import { IPagination } from '../../../src/public/reducers/types';
+import { IPost, IPagination } from '../../../src/public/interfaces';
 
 describe('post reducer', () => {
     const initialState = {
         post: {
-            id: undefined,
+            _id: undefined,
             title: '',
             createdBy: '',
-            lastEdited: new Date(),
+            lastEdited: '',
             tags: [],
             selectedTags: [],
             content: '',
@@ -18,9 +17,6 @@ describe('post reducer', () => {
         paginatedItems: [],
         isRequesting: false,
     };
-    it('should return the initial state', () => {
-        expect(postReducer(initialState, {})).toEqual(initialState);
-    })
 
     it('should handle CREATE_POST', () => {
         const action = {
@@ -69,8 +65,27 @@ describe('post reducer', () => {
     })
 
     it('should handle REQUEST_POSTS_SUCCESS', () => {
-        const pagination = {} as IPagination;
-        const paginatedItems = [];
+        const pagination = {
+            totalItems: 1,
+            currentPage: 1,
+            pageSize: 3,
+            totalPages: 1,
+            startPage: 1,
+            endPage: 1,
+            startIndex: 1,
+            endIndex: 1,
+            pages: [1]
+        };
+        const paginatedItems = [
+            {
+                title: 'test1',
+                createdBy: 't',
+                lastEdited: '2020-02-02',
+                tags: [],
+                selectedTags: [],
+                content: '1'
+            }
+        ];
         const action = {
             type: postConstants.REQUEST_POSTS_SUCCESS,
             pagination,

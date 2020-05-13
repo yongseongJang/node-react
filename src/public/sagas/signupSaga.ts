@@ -2,7 +2,7 @@ import { take, call, put, fork } from 'redux-saga/effects';
 import { signupServices } from '../services';
 import { signupConstants, signupActions } from '../actions';
 import { history } from '../utils/history';
-import { IUserInfo } from '../actions/types';
+import { IUserInfo } from '../interfaces';
 
 function* signup(userInfo: IUserInfo) {
   try {

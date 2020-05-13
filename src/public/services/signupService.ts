@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IUserInfo } from '../actions/types';
+import { IUserInfo } from '../interfaces';
 
 const signup = (userInfo: IUserInfo) => {
   return axios.post('/api/users', { userInfo }).catch(err => {

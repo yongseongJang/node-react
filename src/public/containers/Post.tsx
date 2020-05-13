@@ -1,39 +1,77 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { postActions } from '../actions';
-import { IPost } from '../actions/types';
+import { IPost } from '../interfaces';
 import { RootState } from '../reducers/types';
 import { Modal, ModalHeader, ModalBody, Label, Input } from 'reactstrap';
 
 interface PostProps {
   isOpen: boolean;
-  isNewPost: boolean;
   toggle: () => void;
+  postId: string;
 }
 
 const Post = (props: PostProps) => {
   const dispatch = useDispatch();
-  const postInStore = useSelector((state: RootState) => state.postReducer.post);
+
   const { userName, token } = useSelector(
     (state: RootState) => state.loginReducer,
   );
+
+  useEffect(() => {
+    if (props.isOpen) {
+      if (props.postId === 'new') {
+        const date = getCurrentDate();
+        dispatch(postActions.setNewPost(userName, date));
+      } else {
+        dispatch(postActions.readPost(props.postId, token));
+      }
+    }
+  }, [props.isOpen, props.postId]);
+
+  const { post: postInStore } = useSelector(
+    (state: RootState) => state.postReducer,
+  );
+
   const [post, setPost] = useState<IPost>({
     ...postInStore,
     createdBy: userName,
   });
+  useMemo(() => setPost(postInStore), [postInStore]);
 
   const closeThisPost = () => {
-    if (props.isNewPost) {
-      dispatch(postActions.createPost(post, token));
-    }
+    const date = getCurrentDate();
+    setPost({ ...post, lastEdited: date });
     props.toggle();
   };
+
+  useEffect(() => {
+    if (!props.isOpen) {
+      if (props.postId === 'new') {
+        dispatch(postActions.createPost(post, token));
+      } else {
+        dispatch(postActions.updatePost(post, token));
+      }
+      dispatch(postActions.requestPosts(1, token));
+    }
+  }, [props.isOpen, post]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     const key = e.target.id;
     setPost({ ...post, [key]: inputValue });
+  };
+
+  const getCurrentDate = () => {
+    const date = new Date();
+    const year = date.getFullYear().toString();
+    const month =
+      (date.getMonth() + 1) / 10 >= 1
+        ? (date.getMonth() + 1).toString()
+        : '0' + (date.getMonth() + 1).toString();
+    const day = date.getDate();
+    return `${year}-${month}-${day}`;
   };
 
   return (
@@ -45,6 +83,7 @@ const Post = (props: PostProps) => {
               className="Post__Header__Title__Input"
               id="title"
               placeholder="Untitled"
+              value={post.title}
               onChange={onChange}
             />
           </div>
@@ -77,6 +116,7 @@ const Post = (props: PostProps) => {
               id="content"
               type="textarea"
               placeholder="Press Enter to continue with an empty page"
+              value={post.content}
               onChange={onChange}
             />
           </div>

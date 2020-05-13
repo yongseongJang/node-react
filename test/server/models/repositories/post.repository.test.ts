@@ -25,7 +25,7 @@ describe('post repository unit tests', () => {
       _id: '4a23c1b5d52a003c98e13f1a',
       title: 'Babel',
       createdBy: users[0].userName,
-      lastEdited: new Date('2020-02-01'),
+      lastEdited: '2020-02-01',
       tags: ['Babel', 'Webpack', 'NodeJS'],
       selectedTags: ['Babel'],
       content: undefined,
@@ -43,7 +43,7 @@ describe('post repository unit tests', () => {
       _id: '4a23c1b5d52a003c98e13f1c',
       title: 'NodeJS',
       createdBy: users[1].userName,
-      lastEdited: new Date('2020-02-02'),
+      lastEdited: '2020-02-02',
       tags: ['Babel', 'Webpack', 'NodeJS'],
       selectedTags: ['NodeJS'],
       content: undefined,
@@ -96,7 +96,7 @@ describe('post repository unit tests', () => {
         _id: '4a23c1b5d52a003c98e13f1d',
         title: 'React',
         createdBy: users[0].userName,
-        lastEdited: new Date('2020-02-01'),
+        lastEdited: '2020-02-01',
         tags: ['Babel', 'Webpack', 'NodeJS', 'React'],
         selectedTags: ['React'],
         content: undefined,
@@ -106,20 +106,6 @@ describe('post repository unit tests', () => {
       expect(result._id.toString()).toEqual(
         '4a23c1b5d52a003c98e13f1d',
       );
-    });
-
-    it('should throw error if properties type of post object did not matches schematypes', async () => {
-      const invalidedPost = {
-        _id: '4a23c1b5d52a003c98e13f1e',
-        title: 'React',
-        createdBy: users[0].userName,
-        lastEdited: 'a month ago',
-        tags: ['Babel', 'Webpack', 'NodeJS', 'React'],
-        selectedTags: ['React'],
-        content: undefined,
-      };
-
-      await expect(postRepository.create(invalidedPost)).rejects.toThrow();
     });
   });
 
@@ -141,7 +127,7 @@ describe('post repository unit tests', () => {
         _id: postId,
         title: 'React',
         createdBy: users[1].userName,
-        lastEdited: new Date('2020-02-03'),
+        lastEdited: '2020-02-03',
         tags: ['Babel', 'Webpack', 'React'],
         selectedTags: ['React'],
         content: undefined,
@@ -149,24 +135,6 @@ describe('post repository unit tests', () => {
 
       const result = await postRepository.updateByPostId(postId, post);
       expect(result.nModified).toBe(1);
-    });
-
-    it('should throw error if properties type of post object did not matches schematypes', async () => {
-      const postId = '4a23c1b5d52a003c98e13f1c';
-
-      const invalidatedPost = {
-        _id: postId,
-        title: 'React',
-        createdBy: users[1].userName,
-        lastEdited: 'a day ago',
-        tags: ['Babel', 'Webpack', 'React'],
-        selectedTags: ['React'],
-        content: undefined,
-      };
-
-      await expect(
-        postRepository.updateByPostId(postId, invalidatedPost),
-      ).rejects.toThrow();
     });
   });
 });

@@ -4,32 +4,34 @@ import { Input } from '../components';
 import { loginActions } from '../actions';
 import withForm from '../hocs/withForm';
 import { Form, FormGroup, Button } from 'reactstrap';
+import { IFields } from '../utils/fields/types';
 
 interface LoginFormProps {
   renderElements: Function;
   isValidForm: boolean;
-  onChange: Function;
+  onChange: () => void;
   submit: Function;
 }
-
-const LoginForm = (props: LoginFormProps) => {
+const LoginForm: React.FC<LoginFormProps> = props => {
   return (
     <div className="LoginForm">
       <Form>
-        {props.renderElements().map(formElement => {
-          return (
-            <FormGroup key={formElement.id}>
-              <Input
-                id={formElement.id}
-                label={formElement.config.elementLabel}
-                type={formElement.config.inputType}
-                value={formElement.config.value}
-                onChange={props.onChange}
-                errorMessage={formElement.config.errorMessage}
-              />
-            </FormGroup>
-          );
-        })}
+        {props
+          .renderElements()
+          .map((formElement: { id: string; config: IFields }) => {
+            return (
+              <FormGroup key={formElement.id}>
+                <Input
+                  id={formElement.id}
+                  label={formElement.config.elementLabel}
+                  type={formElement.config.inputType}
+                  value={formElement.config.value}
+                  onChange={props.onChange}
+                  errorMessage={formElement.config.errorMessage}
+                />
+              </FormGroup>
+            );
+          })}
         <Button
           className="LoginForm__Button"
           disabled={!props.isValidForm}

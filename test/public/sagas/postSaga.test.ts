@@ -1,10 +1,9 @@
 import { createPost, watchCreatePost, watchRequestPosts, requestPost } from '../../../src/public/sagas/postSaga';
 import { postConstants, postActions } from '../../../src/public/actions/index'
-import { postServices } from '../../../src/public/services/postService';
-import { IPost } from '../../../src/public/actions/types';
+import { postServices } from '../../../src/public/services';
+import { IPost, IPagination } from '../../../src/public/interfaces';
 import { testSaga } from 'redux-saga-test-plan';
 import { runSaga } from 'redux-saga';
-import { IPagination } from '../../../src/public/reducers/types';
 
 describe('post saga', () => {
     it('should call createPost function after take create post request', () => {
@@ -23,10 +22,10 @@ describe('post saga', () => {
 
         postServices.createPost = jest.fn()
 
-        const dispatched = [];
+        const dispatched = [] as Array<{ type: string, [key: string]: any }>;
         await runSaga(
             {
-                dispatch: action => dispatched.push(action),
+                dispatch: (action: { type: string, [key: string]: any }) => dispatched.push(action),
             },
             createPost,
             post,
@@ -46,10 +45,10 @@ describe('post saga', () => {
             throw error;
         })
 
-        const dispatched = [];
+        const dispatched = [] as Array<{ type: string, [key: string]: any }>;
         await runSaga(
             {
-                dispatch: action => dispatched.push(action),
+                dispatch: (action: { type: string, [key: string]: any }) => dispatched.push(action),
             },
             createPost,
             post,
@@ -72,18 +71,18 @@ describe('post saga', () => {
 
     it('should dispatch request post success action if page and token is valid', async () => {
         const pagination = {} as IPagination;
-        const paginatedItems = [];
+        const paginatedItems = [] as Array<IPost>;
 
-        postServices.requestPosts = jest.fn().mockImplementation(() => {
+        postServices.requestPosts = jest.fn().mockImplementation((page, token) => {
             return { pagination, paginatedItems };
         });
 
         const page = 1;
         const token = 'token';
-        const dispatched = [];
+        const dispatched = [] as Array<{ type: string, [key: string]: any }>;
         await runSaga(
             {
-                dispatch: action => dispatched.push(action),
+                dispatch: (action: { type: string, [key: string]: any }) => dispatched.push(action),
             },
             requestPost,
             page,

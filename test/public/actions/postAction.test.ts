@@ -1,6 +1,5 @@
 import { postConstants, postActions } from '../../../src/public/actions'
-import { IPost } from '../../../src/public/actions/types';
-import { IPagination } from '../../../src/public/reducers/types';
+import { IPost, IPagination } from '../../../src/public/interfaces';
 
 describe('post action', () => {
     it('should create an action to post create', () => {
@@ -43,7 +42,7 @@ describe('post action', () => {
 
     it('should create an action to request posts success', () => {
         const pagination = {} as IPagination;
-        const paginatedItems = [];
+        const paginatedItems = [] as Array<IPost>;
         const expectedAction = {
             type: postConstants.REQUEST_POSTS_SUCCESS,
             pagination,
