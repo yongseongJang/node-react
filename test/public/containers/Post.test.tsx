@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { Table } from '../../../src/public/containers';
-import { postActions } from '../../../src/public/actions';
 import { mount } from '../enzyme';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import { postActions } from '../../../src/public/actions';
+import { Post } from '../../../src/public/containers';
 
-describe('<Table />', () => {
+describe('<Post />', () => {
   const initialState = {
     loginReducer: {
+      userName: 'test',
       token: 'token',
     },
     postReducer: {
@@ -21,15 +22,15 @@ describe('<Table />', () => {
         content: '',
       },
       pagination: {
-        totalItems: 4,
+        totalItems: 1,
         currentPage: 1,
         pageSize: 3,
-        totalPages: 2,
+        totalPages: 1,
         startPage: 1,
-        endPage: 2,
+        endPage: 1,
         startIndex: 1,
-        endIndex: 3,
-        pages: [1, 2],
+        endIndex: 1,
+        pages: [1],
       },
       paginatedItems: [
         {
@@ -41,62 +42,57 @@ describe('<Table />', () => {
           selectedTags: [],
           content: '1',
         },
-        {
-          _id: '2',
-          title: '2',
-          createdBy: 't',
-          lastEdited: '2020-02-02',
-          tags: [],
-          selectedTags: [],
-          content: '2',
-        },
-        {
-          _id: '3',
-          title: '3',
-          createdBy: 't',
-          lastEdited: '2020-02-02',
-          tags: [],
-          selectedTags: [],
-          content: '3',
-        },
       ],
       isRequesting: false,
     },
   };
   const mockStore = configureStore();
-
-  it('should dispatch an action to get page', () => {
+  it('should dispatch set new post action if post id is new ', () => {
     const store = mockStore(initialState);
     store.dispatch = jest.fn();
 
+    const closePost = jest.fn();
+
+    const getCurrentDate = () => {
+      const date = new Date();
+      const year = date.getFullYear().toString();
+      const month =
+        (date.getMonth() + 1) / 10 >= 1
+          ? (date.getMonth() + 1).toString()
+          : '0' + (date.getMonth() + 1).toString();
+      const day = date.getDate();
+      return `${year}-${month}-${day}`;
+    };
+
     const wrapper = mount(
       <Provider store={store}>
-        <Table />
+        <Post isOpen={true} toggle={closePost} postId="new" />
       </Provider>,
     );
 
     expect(store.dispatch).toHaveBeenCalledWith(
-      postActions.requestPosts(1, initialState.loginReducer.token),
+      postActions.setNewPost(
+        initialState.loginReducer.userName,
+        getCurrentDate(),
+      ),
     );
   });
 
-  it('should open modal if post item is clicked', () => {
+  it('should dispatch read post action if post id is not new ', () => {
     const store = mockStore(initialState);
     store.dispatch = jest.fn();
 
+    const closePost = jest.fn();
+    const postId = '1';
+
     const wrapper = mount(
       <Provider store={store}>
-        <Table />
+        <Post isOpen={true} toggle={closePost} postId={postId} />
       </Provider>,
     );
 
-    expect(wrapper.find('Modal').prop('isOpen')).toBe(false);
-
-    wrapper
-      .find('#post_1')
-      .hostNodes()
-      .simulate('click');
-
-    expect(wrapper.find('Modal').prop('isOpen')).toBe(true);
+    expect(store.dispatch).toHaveBeenCalledWith(
+      postActions.readPost(postId, initialState.loginReducer.token),
+    );
   });
 });

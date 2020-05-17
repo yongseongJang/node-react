@@ -43,6 +43,7 @@ const Table = () => {
               ? paginatedItems.map(v => {
                   return (
                     <div
+                      key={v._id}
                       className="Table__ListGroup__ListGroupItem__Content"
                       id={`post_${v._id}`}
                       onClick={openPost}

@@ -54,9 +54,11 @@ const Pagination = (props: PaginationProps) => {
         <PaginationItem disabled={props.currentPage === props.totalPages}>
           <PaginationLink id="next" next onClick={handlePageClick} />
         </PaginationItem>
-        <PaginationItem disabled={props.currentPage === props.totalPages}>
-          <PaginationLink id="last" last onClick={handlePageClick} />
-        </PaginationItem>
+        <div className="test">
+          <PaginationItem disabled={props.currentPage === props.totalPages}>
+            <PaginationLink id="last" last onClick={handlePageClick} />
+          </PaginationItem>
+        </div>
       </React.Fragment>
     </RPagination>
   );
