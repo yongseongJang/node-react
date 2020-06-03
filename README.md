@@ -49,4 +49,7 @@
  ## Front-end Design Pattern
  + Container and Presentational Component, Stateful and Stateless, HOC
  
- 
+ ## 프로젝트를 통해서 경험해 본 것
+ + jwt를 사용한 authentication
+ + pagination
+ + typescript 사용
