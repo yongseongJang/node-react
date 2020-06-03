@@ -13,7 +13,7 @@
   + Webpack
   + Babel
   
-## Project Architecture
+## Project Package Structure
  ```bash
   src
   |__public
