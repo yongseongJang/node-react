@@ -1,53 +1,61 @@
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const path = require('path');
 
 module.exports = {
-    entry: './src/public/index.jsx',
-    output: {
-        path: path.resolve(__dirname, 'dist/client'),
-        filename: '[name].js',
-        publicPath: '/'
+  mode: 'development',
+  entry: './src/public/index.tsx',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js',
+    publicPath: '/',
+  },
+  devtool: 'inline-source-map',
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(ts|js)x?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+          },
+        ],
+      },
+      // {
+      //   enforce: 'pre',
+      //   test: /\.js$/,
+      //   loader: 'source-map-loader',
+      // },
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+    ],
+  },
+  devServer: {
+    host: '127.0.0.1',
+    port: 9000,
+    open: true,
+    hot: true,
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:9001',
+        changeOrigin: true,
+      },
     },
-    module: {
-        rules: [
-            {
-                test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
-                include: path.resolve(__dirname, 'src'),
-                use: [
-                    {
-                        loader: 'babel-loader',
-                    }
-                ]
-            },
-            {
-                test: /\.css$/,
-                exclude: /node_modules/,
-                include: path.resolve(__dirname, 'src'),
-                use: [MiniCssExtractPlugin.loader, "css-loader"]
-            },
-
-        ]
-    },
-    devServer: {
-        host: '192.168.171.135',
-        port: 9000,
-        open: true,
-        hot: true
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: './views/index.html',
-            filename: './index.html'
-        }),
-        new MiniCssExtractPlugin({
-            filename: '[name].css'
-        }),
-        new webpack.HotModuleReplacementPlugin(),
-        new CleanWebpackPlugin()
-    ]
-}
+    historyApiFallback: true,
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new CleanWebpackPlugin(),
+  ],
+};
